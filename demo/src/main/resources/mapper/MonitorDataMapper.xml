@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="com.example.demo.mapper.MonitorDataMapper"> 
+	<resultMap id="monitorData" type="MonitorData">
+		<id property="id" column="id"/>
+		<result property="monitorId" column="MONITOR_ID"/>
+		<result property="datas" column="DATAS"/>
+		<result property="templateId" column="TEMPLATE_ID"/>
+		<result property="createtm" column="CREATETM"/>
+		<result property="proctm" column="PROCTM" />
+	</resultMap>
+	
+	
+
+
+	<!--findByIdByXML  -->
+	<!-- <select id="findByIdByXML" resultType="monitorData">
+	   SELECT * FROM t_monitor_data WHERE id = #{id}
+	</select> -->
+	
+	<!-- saveMonitorData -->
+	<insert id="saveMonitorData" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="id">
+	   insert into t_monitor_data
+	   (id,MONITOR_ID,DATAS,TEMPLATE_ID,CREATETM,PROCTM) <!-- ,CREATETM,PROCTM -->
+	    values 
+	   (sys_guid(),#{monitorData.monitorId},#{monitorData.datas},#{monitorData.templateId},#{monitorData.createtm},#{monitorData.proctm})<!--,#{monitorData.createtm},#{monitorData.proctm}  -->
+	</insert>
+	
+	<!-- updateMonitorData -->
+	<update id="updateMonitorData" parameterType="java.util.Map">
+		<if test="monitorData.id != null">
+			update t_monitor_data
+			<set>
+				<if test="monitorData.monitorId != null">MONITOR_ID=#{monitorData.monitorId},</if>
+				<if test="monitorData.datas != null">DATAS=#{monitorData.datas},</if>
+				<if test="monitorData.templateId != null">TEMPLATE_ID=#{monitorData.templateId},</if>
+				<if test="monitorData.createtm != null">CREATETM=#{monitorData.createtm},</if>
+				<if test="monitorData.proctm != null">PROCTM=#{monitorData.proctm},</if>
+			</set>
+			<where>id=#{monitorData.id}</where>
+		</if>
+	</update>
+</mapper>
